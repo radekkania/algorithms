@@ -1,3 +1,4 @@
+"""by radoslaw kania"""
 class SundaySearch:
     """Sunday pattern search algorithm. """
 

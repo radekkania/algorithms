@@ -1,3 +1,7 @@
+"""
+by radoslaw kania
+"""
+
 class SearchAlgorithmBase:
     def __init__(self):
         self.__counter = 0
