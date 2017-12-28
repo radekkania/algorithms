@@ -1,4 +1,6 @@
 """by radoslaw kania"""
+
+
 class SundaySearch:
     """Sunday pattern search algorithm. """
 
@@ -32,6 +34,16 @@ class SundaySearch:
                 return j
             j += 1
         return len(self._pattern) + 1
+
+    """ method creates list of last occurrence of sign of pattern """
+    def _pre_process(self):
+        for j in range(len(self._alphabet)):
+            self.last_dict[self._pattern[j]] = len(self._pattern) + 1
+
+        for k in range(len(self._pattern)):
+            sign = self._pattern[k]
+            self.last_dict[sign] = k
+
 
     def search2(self, text):
         i = 0
@@ -224,12 +236,12 @@ if __name__ == "__main__":
     sunday = tuple(sunday_results)
     naive = tuple(naive_results)
 
-    rects1 = plt.bar(index, sunday, bar_width,
+    rects1 = plt.bar(index, sunday_results, bar_width,
                      alpha=opacity,
                      color='b',
                      label='sunday')
 
-    rects2 = plt.bar(index + bar_width, naive, bar_width,
+    rects2 = plt.bar(index + bar_width, naive_results, bar_width,
                      alpha=opacity,
                      color='g',
                      label='naive')
