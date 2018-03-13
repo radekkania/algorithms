@@ -1,3 +1,9 @@
+"""
+Implementation of Prim Algorithm for MST
+by Radoslaw Kania
+radoslaw.kania@unilodz.eu
+"""
+
 import graphviz as gv
 import webbrowser, os
 
