@@ -1,5 +1,5 @@
 import graphviz as gv
-
+import webbrowser, os
 
 def get_parent(index):
     return (index-1)//2
@@ -11,19 +11,6 @@ def get_right(index):
 
 def get_left(index):
     return 2*index + 1
-
-
-# def edge_equals(edge1, edge2):
-#     if edge1.get_v() == edge2.get_v() and edge1.get_w() == edge2.get_v():
-#         return True
-#
-#
-# def is_list_contain_edge(list_of_edges, x):
-#     for i in range(len(list_of_edges)):
-#         element = list_of_edges[i]
-#         if edge_equals(element, x):
-#             return True
-#     return False
 
 
 class Queue:
@@ -218,41 +205,34 @@ class SpanningTree:
         return self._spanning_tree
 
 
-g = Graph(8)
-g.add_edge(Edge(1, 2, 2))
-g.add_edge(Edge(1, 4, 4))
-g.add_edge(Edge(1, 6, 5))
-g.add_edge(Edge(1, 3, 3))
-g.add_edge(Edge(2, 5, 2))
-g.add_edge(Edge(5, 3, 1))
-g.add_edge(Edge(5, 4, 1))
-g.add_edge(Edge(5, 6, 1))
-g.add_edge(Edge(4, 7, 1))
-g.add_edge(Edge(7, 8, 2))
-g.add_edge(Edge(8, 6, 3))
+try:
+    edges = []
+    vertexs = set()
+    with open('edges.txt') as f:
+        lines = f.readlines()
+        for line in lines:
+            line = line.replace('\n', '')
+            list = line.split(',')
+            v = int(list[0])
+            w = int(list[1])
+            weight = int(list[2])
+
+            edge = Edge(v, w, weight)
+            edges.append(edge)
+            vertexs.add(v)
+            vertexs.add(w)
+
+except FileNotFoundError:
+    print("File not found")
+
+if len(edges) > 0:
+    g = Graph(len(vertexs))
+    for edge in edges:
+        g.add_edge(edge)
 
 spanning_tree = SpanningTree(g)
 spanning_tree.get_spanning_tree(6)
 spanning_tree.print()
-
-# graph = graphx.Graph()
-# for _ in range(9):
-#     graph.insert_node()
-#
-# graph.add_edge(1, 2, directed=0)
-# graph.add_edge(1, 4, directed=0)
-# graph.add_edge(1, 6, directed=0)
-# graph.add_edge(1, 3, directed=0)
-# graph.add_edge(2, 5, directed=0)
-# graph.add_edge(5, 3, directed=0)
-# graph.add_edge(5, 4, directed=0)
-# graph.add_edge(5, 6, directed=0)
-# graph.add_edge(4, 7, directed=0)
-# graph.add_edge(7, 8, directed=0)
-# graph.add_edge(8, 6, directed=0)
-#
-# draw_graph.draw_net(graph.adj_mat)
-
 
 graphEdges = g.get_edges()
 resultTree = spanning_tree.get_edges()
@@ -271,8 +251,6 @@ for i in range(len(graphEdges)):
     else:
         g2.edge(str(edge.get_v()), str(edge.get_w()), label=str(edge.get_weight()))
 
-g2.render('img/g4')
-
-
-
-
+filename = 'img/g4'
+g2.render(filename)
+webbrowser.open('file://' + os.path.realpath(filename + '.svg'))
