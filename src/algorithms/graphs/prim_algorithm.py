@@ -210,7 +210,7 @@ class SpanningTree:
     def get_edges(self):
         return self._spanning_tree
 
-
+start_vertex = 1
 try:
     edges = []
     vertexs = set()
@@ -219,14 +219,18 @@ try:
         for line in lines:
             line = line.replace('\n', '')
             list = line.split(',')
-            v = int(list[0])
-            w = int(list[1])
-            weight = int(list[2])
 
-            edge = Edge(v, w, weight)
-            edges.append(edge)
-            vertexs.add(v)
-            vertexs.add(w)
+            if (list[1] != ''):
+                v = int(list[0])
+                w = int(list[1])
+                weight = int(list[2])
+
+                edge = Edge(v, w, weight)
+                edges.append(edge)
+                vertexs.add(v)
+                vertexs.add(w)
+            else:
+                start_vertex = int(list[0])
 
 except FileNotFoundError:
     print("File not found")
@@ -237,7 +241,9 @@ if len(edges) > 0:
         g.add_edge(edge)
 
 spanning_tree = SpanningTree(g)
-spanning_tree.get_spanning_tree(6)
+
+
+spanning_tree.get_spanning_tree(1)
 spanning_tree.print()
 
 graphEdges = g.get_edges()
